@@ -1,0 +1,75 @@
+@model Book.BookFormViewModel;
+
+<form method="post" class="form-upsert">
+    <table class="form-table">
+        <tbody>
+            <tr>
+                <td>
+                    <label asp-for="Code">Code*</label>
+                </td>
+                <td>
+                    <input asp-for="Code">
+                    <span class="field-validation-error" asp-validation-for="Code"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Title">Title*</label>
+                </td>
+                <td>
+                    <input asp-for="Title">
+                    <span class="field-validation-error" asp-validation-for="Title"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="CategoryName">Category</label>
+                </td>
+                <td>
+                    <input asp-for="CategoryName" value="@Model.CategoryName" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="AuthorId">Author*</label>
+                </td>
+                <td>
+                    <select asp-for="AuthorId" id="@Model.AuthorId">
+                        <option value="">Select Author</option>
+                        @foreach (var author in Model.Authors)
+                        {
+                            <option value="@author.Value">@author.Text</option>
+                        }
+                    </select>
+                    <span class="field-validation-error" asp-validation-for="AuthorId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="ReleaseDate">Release Date</label>
+                </td>
+                <td>
+                    <input type="date" asp-for="ReleaseDate">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="TotalPage">Total Page</label>
+                </td>
+                <td>
+                    <input type="number" asp-for="TotalPage">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Summary">Summary</label>
+                </td>
+                <td>
+                    <textarea asp-for="Summary"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Submit</button>
+    <a asp-controller="Book" asp-action="Index" asp-route-name="@Model.CategoryName"><button type="button">Back to Index</button></a>
+</form>

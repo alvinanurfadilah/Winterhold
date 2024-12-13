@@ -1,0 +1,76 @@
+@model Customer.CustomerFormViewModel;
+
+<form method="post" class="form-upsert">
+    <table class="form-table">
+        <tbody>
+            <tr>
+                <td>
+                    <label asp-for="MembershipNumber">Membership Number*</label>
+                </td>
+                <td>
+                    <input asp-for="MembershipNumber">
+                    <span class="field-validation-error" asp-validation-for="MembershipNumber"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="FirstName">First Name*</label>
+                </td>
+                <td>
+                    <input asp-for="FirstName">
+                    <span class="field-validation-error" asp-validation-for="FirstName"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="LastName">Last Name</label>
+                </td>
+                <td>
+                    <input asp-for="LastName">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="BirthDate">Birth Date*</label>
+                </td>
+                <td>
+                    <input type="date" asp-for="BirthDate">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Gender">Gender*</label>
+                </td>
+                <td>
+                    @* <input asp-for="Gender"> *@
+                    <select asp-for="Gender" id="@Model.Gender">
+                        <option value="">Select Gender</option>
+                        @foreach (var gender in Model.Genders)
+                        {
+                            <option value="@gender.Value">@gender.Text</option>
+                        }
+                    </select>
+                    <span class="field-validation-error" asp-validation-for="Gender"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Phone">Phone</label>
+                </td>
+                <td>
+                    <input asp-for="Phone">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Address">Address</label>
+                </td>
+                <td>
+                    <textarea asp-for="Address"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="submit">Submit</button>
+    <a asp-controller="Customer" asp-action="Index"><button type="button">Back to Index</button></a>
+</form>

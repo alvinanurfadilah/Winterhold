@@ -1,0 +1,86 @@
+@model Category.CategoryIndexViewModel;
+
+<div class="main-body">
+    <form class="search" asp-action="Index" method="get">
+        <label for="">Name</label>
+        @* <input type="text" id="inputNameSearch"> *@
+        <input asp-for="@Model.Name">
+        <button type="submit" id="search">Search</button>
+    </form>
+    <a><button class="add" type="submit">Add New Category</button></a>
+    <table class="table-index">
+        <thead>
+            <tr>
+                <td>Action</td>
+                <td>Category</td>
+                <td>Floor</td>
+                <td>Isle</td>
+                <td>Bay</td>
+                <td>Total Books</td>
+            </tr>
+        </thead>
+        <tbody class="index">
+            @foreach (var category in Model.Categories) {
+                <tr>
+                    <td>
+                        <a asp-controller="Book" asp-action="Index" asp-route-name="@category.Name"><button>Books</button></a>
+                        <a><button class="category-edit" value="@category.Name">Edit</button></a>
+                        <a asp-controller="Category" asp-action="Delete" asp-route-name="@category.Name"><button class="category-delete" value="@category.Name">Delete</button></a>
+                    </td>
+                    <td>@category.Name</td>
+                    <td>@category.Floor</td>
+                    <td>@category.Isle</td>
+                    <td>@category.Bay</td>
+                    <td>@category.TotalBooks</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    @if (Model != null) {
+                    <div class="pagination">
+                        <span>
+                            @for (int pageNumber = 1; pageNumber <= Model.Pagination.TotalPages; pageNumber++) {
+                                <a asp-action="Index" asp-route-pageNumber="@pageNumber" asp-route-name="@Model.Name">@pageNumber</a>
+                            }
+                        </span>
+                    </div>
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="modal">
+        <form action="" class="form-modal">
+            <table>
+                <tr>
+                    <td><label for="">Category Name*</label></td>
+                    <td><input type="text" name="" id="category-name"></td>
+                    <td><span class="field-validation-error"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="">Floor*</label></td>
+                    <td><input type="number" name="" id="floor"></td>
+                    <td><span class="field-validation-error"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="">Isle*</label></td>
+                    <td><input type="text" name="" id="isle"></td>
+                    <td><span class="field-validation-error"></span></td>
+                </tr>
+                <tr>
+                    <td><label for="">Bay*</label></td>
+                    <td><input type="text" name="" id="bay"></td>
+                    <td><span class="field-validation-error"></span></td>
+                </tr>
+            </table>
+            <a href=""><button type="submit" class="insert-category">Submit</button></a>
+            <a href=""><button type="submit" class="update-category">Submit</button></a>
+            <a href=""><button type="submit" class="close-category">Close</button></a>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/category.js" defer></script>

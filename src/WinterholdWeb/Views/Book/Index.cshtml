@@ -1,0 +1,79 @@
+@model Book.BookIndexViewModel;
+
+<div class="main-body">
+    <a asp-controller="Category" asp-action="Index"><button>Back to Category</button></a>
+    <form class="search" asp-action="Index" method="get">
+        <table>
+            <tr>
+                <td><label for="">Title</label></td>
+                <td><input asp-for="@Model.Title"></td>
+            </tr>
+            <tr>
+                <td><label for="">Author</label></td>
+                <td><input asp-for="@Model.Author"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" asp-for="@Model.IsBorrowed"></td>
+                <td><label for="">Is Available</label></td>
+            </tr>
+        </table>
+        <button type="submit">Search</button>
+    </form>
+    <div>List of @Model.Name</div>
+    <a asp-action="Add" asp-route-categoryName="@Model.Name"><button class="add" type="submit">Add New @Model.Name</button></a>
+    <table class="table-index">
+        <thead>
+            <tr>
+                <td>Action</td>
+                <td>Book Title</td>
+                <td>Author</td>
+                <td>Is Borrowed</td>
+                <td>Release Date</td>
+                <td>Total Page</td>
+            </tr>
+        </thead>
+        <tbody class="index">
+            @foreach (var book in Model.Books) {
+                <tr>
+                    <td>
+                        @if (book.Summary != null) {
+                            <a><button class="summary">Summary</button></a>
+                        }
+                        <a asp-action="Update" asp-route-code="@book.Code"><button>Edit</button></a>
+                        <a asp-action="Delete" asp-route-code="@book.Code"><button class="delete-book" value="@book.Title">Delete</button></a>
+                    </td>
+                    <td hidden>@book.Code</td>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.IsBorrowed</td>
+                    <td>@book.ReleaseDate</td>
+                    <td>@book.TotalPage</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    @if (Model != null) {
+                        <div class="pagination">
+                            <span>
+                                @for (int pageNumber = 1; pageNumber <= Model.Pagination.TotalPages; pageNumber++) {
+                                    <a asp-action="Index" asp-route-pageNumber="@pageNumber" asp-route-title="@Model.Title" asp-route-author="@Model.Author" asp-route-isBorrowed="@Model.IsBorrowed">@pageNumber</a>
+                                }
+                            </span>
+                        </div>
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="modal">
+    <form action="" class="form-modal">
+        <p id="summary"></p>
+        <a href=""><button type="submit" class="close-category">Close</button></a>
+    </form>
+</div>
+
+<script src="~/js/book.js" defer></script>

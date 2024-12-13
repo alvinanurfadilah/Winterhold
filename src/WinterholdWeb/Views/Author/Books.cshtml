@@ -1,0 +1,51 @@
+@model AuthorBooksViewModel;
+
+<div class="main-body">
+    <a asp-controller="Author" asp-action="Index"><button type="submit">Back to Author Index</button></a>
+    <form action="">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>@Model.FullName</td>
+            </tr>
+            <tr>
+                <td>Birth Date</td>
+                <td>@Model.BirthDate</td>
+            </tr>
+            <tr>
+                <td>Decease Date</td>
+                <td>@Model.DeceasedDate</td>
+            </tr>
+            <tr>
+                <td>Education</td>
+                <td>@Model.Education</td>
+            </tr>
+            <tr>
+                <td>Summary</td>
+                <td>@Model.Summary</td>
+            </tr>
+        </table>
+    </form>
+    <table class="table-index">
+        <thead>
+            <tr>
+                <td>Book Title</td>
+                <td>Category</td>
+                <td>Is Borrowed</td>
+                <td>Release Date</td>
+                <td>Total Page</td>
+            </tr>
+        </thead>
+        <tbody class="index">
+            @foreach (var item in Model.AuthorBooks) {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.CategoryName</td>
+                    <td>@item.IsBorrowed</td>
+                    <td>@item.ReleaseDate</td>
+                    <td>@item.TotalPage</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

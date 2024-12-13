@@ -1,0 +1,96 @@
+@model Customer.CustomerIndexViewModel;
+
+<div class="main-body">
+    <form class="search" asp-action="Index" method="get">
+        <table>
+            <tr>
+                <td><label for="">Number</label></td>
+                <td><input asp-for="@Model.MembershipNumber"></td>
+            </tr>
+            <tr>
+                <td><label for="">Name</label></td>
+                <td><input asp-for="@Model.FullName"></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" asp-for="@Model.MembershipExpireDate"></td>
+                <td><label for="">Membership Already Expired</label></td>
+            </tr>
+        </table>
+        <button type="submit">Search</button>
+    </form>
+    <a asp-action="Add"><button class="add" type="submit">Add New Customer</button></a>
+    <table class="table-index">
+        <thead>
+            <tr>
+                <td>Action</td>
+                <td>Membership Number</td>
+                <td>Full Name</td>
+                <td>Expire Date</td>
+            </tr>
+        </thead>
+        <tbody class="index">
+            @foreach (var customer in Model.Customers) {
+                <tr>
+                    <td>
+                        <a asp-action="Update" asp-route-membershipNumber="@customer.MembershipNumber"><button>Edit</button></a>
+                        <a asp-action="Delete" asp-route-membershipNumber="@customer.MembershipNumber"><button>Delete</button></a>
+                        <a asp-action="Extend" asp-route-membershipNumber="@customer.MembershipNumber"><button>Extend</button></a>
+                    </td>
+                    <td><a href="" class="membership">@customer.MembershipNumber</a></td>
+                    <td>@customer.FullName</td>
+                    <td>@customer.MembershipExpireDate</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    @if (Model != null) {
+                        <div class="pagination">
+                            @* <span>page 1 of 2</span> *@
+                            <span>
+                                @for (int pageNumber = 1; pageNumber <= Model.Pagination.TotalPages; pageNumber++) {
+                                    <a asp-action="Index" asp-route-pageNumber="@pageNumber" asp-route-membershipNumebr="@Model.MembershipNumber" asp-route-fullName="@Model.FullName">@pageNumber</a>
+                                }
+                            </span>
+                        </div>
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="modal">
+        <form action="" class="form-modal">
+            <table>
+                <tr>
+                    <td><label for="">Membership Number</label></td>
+                    <td><label id="membership-number"></label></td>
+                </tr>
+                <tr>
+                    <td><label for="">Full Name</label></td>
+                    <td><label id="full-name"></label></td>
+                </tr>
+                <tr>
+                    <td><label for="">Birth Date</label></td>
+                    <td><label id="birth-date"></label></td>
+                </tr>
+                <tr>
+                    <td><label for="">Gender</label></td>
+                    <td><label id="gender"></label></td>
+                </tr>
+                <tr>
+                    <td><label for="">Phone</label></td>
+                    <td><label id="phone"></label></td>
+                </tr>
+                <tr>
+                    <td><label for="">Address</label></td>
+                    <td><label id="address"></label></td>
+                </tr>
+            </table>
+            <a href=""><button type="submit" class="close-category">Close</button></a>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/customer.js" defer></script>

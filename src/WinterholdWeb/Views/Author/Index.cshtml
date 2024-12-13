@@ -1,0 +1,59 @@
+@model Author.AuthorIndexViewModel;
+
+<div class="main-body">
+    <form class="search" asp-action="Index" method="get">
+        <label for="">Name</label>
+        <input asp-for="@Model.Name">
+        <button type="submit">Search</button>
+    </form>
+    <a asp-action="Add"><button class="add" type="submit">Add New Author</button></a>
+    <table class="table-index">
+        <thead>
+            <tr>
+                <td>Action</td>
+                <td>Full Name</td>
+                <td>Age</td>
+                <td>Status</td>
+                <td>Education</td>
+            </tr>
+        </thead>
+        <tbody class="index">
+            @foreach (var author in Model.Authors) {
+                <tr>
+                    <td>
+                        <a asp-action="GetAuthorBooks" asp-route-id="@author.Id"><button>Books</button></a>
+                        <a asp-action="Update" asp-route-id="@author.Id"><button>Edit</button></a>
+                        <a asp-action="Delete" asp-route-id="@author.Id"><button onclick="return confirmDelete()">Delete</button></a>
+                    </td>
+                    <td>@author.FullName</td>
+                    <td>@author.Age</td>
+                    <td>@author.Status</td>
+                    <td>@author.Education</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    @if (Model != null) {
+                        <div class="pagination">
+                            <span>
+                                @for (int pageNumber = 1; pageNumber <= Model.Pagination.TotalPages; pageNumber++) {
+                                    <a asp-action="Index" asp-route-pageNumber="@pageNumber" asp-route-name="@Model.Name">@pageNumber</a>
+                                }
+                            </span>
+                        </div>
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    function confirmDelete()
+    {
+        return window.confirm(`Apakah anda yakin ingin menghapus ini?`);
+    }
+</script>

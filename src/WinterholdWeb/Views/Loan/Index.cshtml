@@ -1,0 +1,157 @@
+@model Loan.LoanIndexViewModel;
+
+<div class="main-body">
+    <form class="search" asp-action="Index" method="get">
+        <table>
+            <tr>
+                <td><label for="">Book Title</label></td>
+                <td><input asp-for="@Model.BookTitle"></td>
+            </tr>
+            <tr>
+                <td><label for="">Customer Name</label></td>
+                <td><input asp-for="@Model.CustomerName"></td>
+            </tr>
+            @* <tr>
+                <td><input type="checkbox" name="" id=""></td>
+                <td><label for="">Passed Due Date</label></td>
+            </tr> *@
+        </table>
+        <button type="submit">Search</button>
+    </form>
+    <a><button class="add" type="submit">New Loan</button></a>
+    <table class="table-index">
+        <thead>
+            <tr>
+                <td>Action</td>
+                <td>Book Title</td>
+                <td>Customer Name</td>
+                <td>Loan Date</td>
+                <td>Due Date</td>
+                <td>Return Date</td>
+            </tr>
+        </thead>
+        <tbody class="index">
+            @foreach (var loan in Model.Loans) {
+                <tr>
+                    <td>
+                        <a><button class="detail-loan">Detail</button></a>
+                        <a><button class="edit-loan" value="@loan.Id">Edit</button></a>
+                        @if(@loan.ReturnDate == "-")
+                        {
+                            <a asp-action="Return" asp-route-id="@loan.Id"><button>Return</button></a>
+                        }
+                    </td>
+                    <td hidden>@loan.Id</td>
+                    <td>@loan.BookTitle</td>
+                    <td>@loan.CustomerName</td>
+                    <td>@loan.LoanDate</td>
+                    <td>@loan.DueDate</td>
+                    <td>@loan.ReturnDate</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    @if (Model != null) {
+                        <div class="pagination">
+                            <span>
+                                @for (int pageNumber = 1; pageNumber <= Model.Pagination.TotalPages; pageNumber++) {
+                                    <a asp-action="Index" asp-route-pageNumber="@pageNumber" asp-route-bookTitle="@Model.BookTitle" asp-route-customerName="@Model.CustomerName">@pageNumber</a>
+                                }
+                            </span>
+                        </div>
+                    }
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="modal">
+        <form action="" class="form-modal">
+            <table>
+                <tr>
+                    <td><label>Customer*</label></td>
+                    <td>
+                        <select class="customer-dropdown">
+                            <option value="">Select Customer</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="">Book*</label></td>
+                    <td>
+                        <select class="book-dropdown">
+                            <option value="">Select Book</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="">Loan Date*</label></td>
+                    <td><input type="date" class="loan-date"></td>
+                </tr>
+                <tr>
+                    <td><label for="">Note</label></td>
+                    <td><textarea class="note"></textarea></td>
+                </tr>
+            </table>
+            <a href=""><button type="submit" class="insert-loan">Submit</button></a>
+            <a href=""><button type="submit" class="update-loan">Submit</button></a>
+            <a href=""><button type="submit" class="close-loan">Close</button></a>
+        </form>
+    </div>
+
+    <div class="modal-detail">
+        <div class="modal-detail-loan">
+            <form action="" class="form-modal">
+                <table>
+                    <tr>
+                        <td><label for="">Title</label></td>
+                        <td><label id="title"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Category</label></td>
+                        <td><label id="category"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Author</label></td>
+                        <td><label id="author"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Floor</label></td>
+                        <td><label id="floor"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Isle</label></td>
+                        <td><label id="isle"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Bay</label></td>
+                        <td><label id="bay"></label></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td><label for="">Membership Number</label></td>
+                        <td><label id="membership-number"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Full Name</label></td>
+                        <td><label id="full-name"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Phone</label></td>
+                        <td><label id="phone"></label></td>
+                    </tr>
+                    <tr>
+                        <td><label for="">Membership Expire Date</label></td>
+                        <td><label id="expire-date"></label></td>
+                    </tr>
+                </table>
+            </form>
+            <a href=""><button type="submit" class="close-loan">Close</button></a>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/loan.js" defer></script>
